@@ -12,6 +12,7 @@ public class Main
     public static  String input()
     {
         Scanner in = new Scanner(System.in);
+        System.out.println("Вы будете работать ");
         System.out.println("Введите путь файла");
         String path = in.nextLine();
         return path;
@@ -30,15 +31,7 @@ public class Main
                 width = (line.split(",")).length;
 
             }
-            String[][] values = new String[counter][width];
-            while((line = br.readLine())!= null)
-            {
-                for(int i = 0; i<counter;i++)
-                {
-                    values[i] = line.split(",");
-                    System.out.println(values[i][0]);
-                }
-            }
+
 
         }
         catch(FileNotFoundException e)
@@ -55,6 +48,7 @@ public class Main
 
     public static void main(String[] args)
     {
-        readcsv(input());
+        String path = input();
+        readcsv(path);
     }
 }
