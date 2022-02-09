@@ -51,12 +51,10 @@ public class Work_With_CSV
                     System.out.println(values[i]);
 
                 }
-                if(counter == 2)
-                {
-                    break;
-                }
+                System.out.println(line);
+                break;
             }
-            ;
+
         }
         catch(FileNotFoundException e)
         {
@@ -67,7 +65,7 @@ public class Work_With_CSV
         {
             e.printStackTrace();
         }
-
+//rfqnvjdnqjkernsvpn
     }
 
 }
