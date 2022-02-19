@@ -32,29 +32,13 @@ public class Work_With_CSV
         try
         {
             int counter = 0;
-            String element_names[] = new String[5];
+            String[] element_names = new String[5];
             BufferedReader br = new BufferedReader(new FileReader(path));
             while((line = br.readLine())!= null)
             {
                 counter += 1;
                 String[] values = line.split(",");
-                if(counter == 1)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        element_names[i] = values[i];
-                    }
-                }
-                for(int i = 0; i < 5; i++)
-                {
-
-                    System.out.println(values[i]);
-
-                }
-                System.out.println(line);
-                break;
             }
-
         }
         catch(FileNotFoundException e)
         {
@@ -65,7 +49,6 @@ public class Work_With_CSV
         {
             e.printStackTrace();
         }
-//rfqnvjdnqjkernsvpn
     }
-
+    /*rwjvndcnjawnsvjonsjdnv;j*/
 }
