@@ -26,29 +26,21 @@ public class Work_With_CSV
         }
         return path;
     }
-    public static void readcsv(String path)
-    {
+    public static void readcsv(String path) {
         String line = "";
-        try
-        {
+        try {
             int counter = 0;
             String[] element_names = new String[5];
             BufferedReader br = new BufferedReader(new FileReader(path));
-            while((line = br.readLine())!= null)
-            {
+            while ((line = br.readLine()) != null) {
                 counter += 1;
                 String[] values = line.split(",");
             }
-        }
-        catch(FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Файл Не Найден");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    /*rwjvndcnjawnsvjonsjdnv;j*/
 }
