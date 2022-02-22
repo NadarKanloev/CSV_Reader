@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Objects;
 import java.util.Properties;
 
 public class DBproperties {
@@ -20,5 +21,14 @@ public class DBproperties {
     }
     public String getUrl(){
         return url;
+    }
+    public String getUser() { return user; }
+    public String getPassword() {return  password; }
+    public static DBproperties getProperties(){
+        if(Objects.isNull(INSTANSE)){
+            INSTANSE = new DBproperties();
+            INSTANSE.init(Appli);
+
+        }
     }
 }
