@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Work_With_CSV
 {
-    public static  String input()
+    public static String input()
     {
         String path = " ";
         Scanner in = new Scanner(System.in);

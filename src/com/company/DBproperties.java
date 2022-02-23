@@ -27,8 +27,9 @@ public class DBproperties {
     public static DBproperties getProperties(){
         if(Objects.isNull(INSTANSE)){
             INSTANSE = new DBproperties();
-            INSTANSE.init(Appli);
+            INSTANSE.init(ApplicationProperties.getInstance().getProperties());
 
         }
+        return INSTANSE;
     }
 }
