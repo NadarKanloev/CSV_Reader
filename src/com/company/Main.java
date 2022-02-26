@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import static com.company.Work_With_CSV.input;
@@ -14,10 +15,10 @@ import static com.company.Work_With_CSV.readcsv;
 public class Main
 {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws SQLException {
         String path = input();
         readcsv(path);
+        DBService.Create_Table();
 
         Connection connection = null;
         try {
