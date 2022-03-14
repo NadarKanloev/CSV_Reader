@@ -19,6 +19,7 @@ public class Main
         String path = input();
         readcsv(path);
         Connection connection = null;
+        DBService.calculate_median_value();
         try {
            connection = Config.getConnection();
            if(connection != null){

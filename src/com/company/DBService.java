@@ -2,10 +2,13 @@ package com.company;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.Scanner;
+
 public class DBService {
 
     public static Connection connection = Config.getConnection();
     public static Statement statement;
+    public static Scanner in = new Scanner(System.in);
 
     static {
         try {
@@ -59,11 +62,37 @@ public class DBService {
     public static String calculate_median_value() throws SQLException{
         String median_value = null;
         PreparedStatement preparedStatement = null;
-        try{
-            preparedStatement = connection.prepareStatement("SELECT AVG(amount) FROM (SELECT amount FROM transactions ORDER BY amount LIMIT 2 OFFSET (SELECT (COUNT(*) - 1) / 2   FROM transactions)) AS FOO");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ResultSet resultSet = null;
+        System.out.println("Как вы хотите рассчитать медианное значение?");
+        System.out.println("1. Обычный поиск по всем значениям(стандартное поведение)" + "\n" +
+                "2.Поиск по тем строкам, которые ни в одном из своих столбцов не содержат пустые значения" + "\n" +
+                "3.Медиана суммы транзакции по строкам, отсортированным по полю amount в порядке возрастания, и в которых удалены дублирующиеся значеня по столбцам [mcc_code, tr_type], причем при удалении соотвествующих дублей остаются");
+        String a = in.nextLine();
+        switch (a){
+            case "1":
+                try{
+                    preparedStatement = connection.prepareStatement("SELECT AVG(amount) FROM (SELECT amount FROM transactions ORDER BY amount LIMIT 2 OFFSET (SELECT (COUNT(*) - 1) / 2   FROM transactions)) AS FOO");
+                    resultSet = preparedStatement.executeQuery();
+                    while(resultSet.next()){
+                        median_value = resultSet.getString("avg");
+                        System.out.println(median_value);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            case "2":
+                try {
+                    preparedStatement = connection.prepareStatement("SELECT AVG(amount) FROM(SELECT customer_id, amount, term_id, mcc_code, tr_type FROM transactions WHERE term_id != '' ORDER BY amount LIMIT 2 OFFSET(SELECT (COUNT(*) - 1)/2 FROM transactions)) AS FOO");
+                    resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()){
+                        median_value = resultSet.getString("avg");
+                        System.out.println(median_value);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
         }
-        return "0";
+        return median_value;
     }
 }
