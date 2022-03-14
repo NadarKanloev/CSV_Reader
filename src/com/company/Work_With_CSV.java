@@ -1,10 +1,13 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Work_With_CSV
 {
@@ -26,21 +29,27 @@ public class Work_With_CSV
         }
         return path;
     }
-    public static void readcsv(String path) {
+    public static String[][] readcsv(String path) throws FileNotFoundException{
         String line = "";
+        String[][] elements = new String[104440][6];
+        int counter = 0;
         try {
-            int counter = 0;
-            String[] element_names = new String[5];
+            String[] element_names = new String[6];
             BufferedReader br = new BufferedReader(new FileReader(path));
             while ((line = br.readLine()) != null) {
+                String[] values = new String[6];
+                for(int i = 0; i < 6; i++){
+                    elements[counter] = line.split(",");
+                }
                 counter += 1;
-                String[] values = line.split(",");
             }
+            System.out.println(elements[1][4]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Файл Не Найден");
         } catch (IOException e) {
             e.printStackTrace();
         }
+return elements;
     }
 }

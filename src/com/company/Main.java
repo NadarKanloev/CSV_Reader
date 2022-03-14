@@ -15,11 +15,9 @@ import static com.company.Work_With_CSV.readcsv;
 public class Main
 {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
         String path = input();
         readcsv(path);
-        DBService.Create_Table();
-
         Connection connection = null;
         try {
            connection = Config.getConnection();
