@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
+import com.opencsv.*;
 
 public class Work_With_CSV
 {
@@ -51,5 +52,17 @@ public class Work_With_CSV
             e.printStackTrace();
         }
 return elements;
+    }
+    public static void WriteCSV(String median_value){
+        String csv = "median_value.csv";
+        try{
+            CSVWriter writer = new CSVWriter(new FileWriter(csv));
+            writer.writeNext(median_value.split(","));
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -9,8 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import static com.company.Work_With_CSV.input;
-import static com.company.Work_With_CSV.readcsv;
+import static com.company.Work_With_CSV.*;
 
 public class Main
 {
@@ -19,7 +18,8 @@ public class Main
         String path = input();
         readcsv(path);
         Connection connection = null;
-        DBService.calculate_median_value();
+        String median_value = DBService.calculate_median_value();
+        WriteCSV(median_value);
         try {
            connection = Config.getConnection();
            if(connection != null){

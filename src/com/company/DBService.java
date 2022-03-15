@@ -19,8 +19,6 @@ public class DBService {
     }
 
     public static void Create_Table() throws SQLException {
-
-
         try {
            statement.execute("CREATE TABLE IF NOT EXISTS op (customer_id integer, tr_datetime varchar(255),mcc_code varchar(255), tr_type varchar(255), amount FLOAT, term_id text)");
         }catch (Exception e){
