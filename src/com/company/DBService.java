@@ -20,23 +20,17 @@ public class DBService {
 
     public static void Create_Table() throws SQLException {
         try {
-           statement.execute("CREATE TABLE IF NOT EXISTS op (customer_id integer, tr_datetime varchar(255),mcc_code varchar(255), tr_type varchar(255), amount FLOAT, term_id text)");
+           statement.execute("CREATE TABLE IF NOT EXISTS TABLE_NAME (customer_id integer, tr_datetime varchar(255),mcc_code varchar(255), tr_type varchar(255), amount FLOAT, term_id text)");
         }catch (Exception e){
             e.printStackTrace();
-        }finally {
-            /*if(statement!=null){
-                statement.close();
-            }
-              if(connection!=null){
-                  connection.close();
-              }*/
         }
-    }
+        }
+
     public static void table_fill() throws SQLException, FileNotFoundException {
        String[][] elements = Work_With_CSV.readcsv("transactions_cut.csv");
        PreparedStatement preparedStatement = null;
         try {
-           preparedStatement = connection.prepareStatement("INSERT INTO op(customer_id,tr_datetime, mcc_code, tr_type, amount, term_id)" +
+           preparedStatement = connection.prepareStatement("INSERT INTO TABLE_NAME (customer_id,tr_datetime, mcc_code, tr_type, amount, term_id)" +
                    "VALUES (?, ?, ?, ?, ?, ?)");
             for(int i = 1; i<104440; i++) {
                 preparedStatement.setInt(1, Integer.parseInt(elements[i][0]));
@@ -73,22 +67,37 @@ public class DBService {
                     resultSet = preparedStatement.executeQuery();
                     while(resultSet.next()){
                         median_value = resultSet.getString("avg");
-                        System.out.println(median_value);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                break;
             case "2":
                 try {
                     preparedStatement = connection.prepareStatement("SELECT AVG(amount) FROM(SELECT customer_id, amount, term_id, mcc_code, tr_type FROM transactions WHERE term_id != '' ORDER BY amount LIMIT 2 OFFSET(SELECT (COUNT(*) - 1)/2 FROM transactions)) AS FOO");
                     resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()){
                         median_value = resultSet.getString("avg");
-                        System.out.println(median_value);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                break;
+            case "3":
+                try{
+                    preparedStatement = connection.prepareStatement("SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY amount)\n" +
+                            "FROM (SELECT DISTINCT ON (mcc_code, tr_type) mcc_code, tr_type, amount\n" +
+                            "FROM transactions\n" +
+                            "ORDER BY mcc_code, tr_type, amount DESC) as mctta");
+                    resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()){
+                        median_value = resultSet.getString("percentile_cont");
+
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
 
         }
         return median_value;

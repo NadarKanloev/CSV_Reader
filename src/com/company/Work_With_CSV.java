@@ -27,6 +27,7 @@ public class Work_With_CSV
                 break;
             case "2":
                 path = "transactions_cut.csv";
+                break;
         }
         return path;
     }
@@ -44,7 +45,6 @@ public class Work_With_CSV
                 }
                 counter += 1;
             }
-            System.out.println(elements[1][4]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Файл Не Найден");
